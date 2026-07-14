@@ -1,29 +1,30 @@
 import { useState } from "react";
 
+const fakeWorkers = [
+  { id: 1, name: "Adebayo O.", skill: "Plumber", rating: 4.9, reviews: 23, distance: "2.1km", location: "Ibadan", verified: true, phone: "0803 123 4567" },
+  { id: 2, name: "Chinedu K.", skill: "Electrician", rating: 4.8, reviews: 18, distance: "3.5km", location: "Osogbo", verified: true, phone: "0902 987 6543" },
+];
+
 export default function App() {
   const [page, setPage] = useState("landing"); 
   const [signedUp, setSignedUp] = useState(false);
+  const [userType, setUserType] = useState(""); // "finder" or "worker"
+  const [activeTab, setActiveTab] = useState("search");
+
+  const handleSignup = (type) => {
+    setUserType(type);
+    setSignedUp(true);
+    setPage("dashboard");
+  }
 
   if (page === "landing") {
     return (
-      <div className="min-h-screen bg-[#F8F5F0] flex flex-col items-center justify-center p-6">
+      <div className="min-h-screen bg-[#F8F5F0] flex-col items-center justify-center p-6">
         <h1 className="text-6xl font-extrabold text-[#0A4D3C]">MELANDI</h1>
-        <p className="text-gray-600 mt-2">Connect with trusted skilled workers</p>
-        <button onClick={() => setPage("signup")} className="mt-8 bg-[#0A4D3C] text-white px-8 py-4 rounded-2xl font-bold w-full max-w-sm">Skill Finder</button>
-        <button onClick={() => setPage("signup")} className="mt-4 bg-[#D4AF37] text-white px-8 py-4 rounded-2xl font-bold w-full max-w-sm">Skill Worker</button>
-      </div>
-    )
-  }
-
-  if (page === "signup") {
-    return (
-      <div className="min-h-screen bg-[#F8F5F0] p-6">
-        <button onClick={() => setPage("landing")} className="mb-4 text-[#0A4D3C] font-bold">← Back</button>
-        <h2 className="text-3xl font-bold text-[#0A4D3C]">Create Account</h2>
-        <p className="text-gray-600">Free for 1 month. Then ₦2000/mo</p>
-        <input placeholder="Full Name" className="border w-full p-3 rounded-xl mt-4" />
-        <input placeholder="Phone Number" className="border w-full p-3 rounded-xl mt-2" />
-        <button onClick={() => {setSignedUp(true); setPage("dashboard")}} className="w-full bg-[#0A4D3C] text-white py-3 rounded-xl mt-4 font-bold">Start Free Trial</button>
+        <div className="flex flex-col gap-4 mt-8 w-full max-w-sm">
+          <button onClick={() => handleSignup("finder")} className="bg-[#0A4D3C] text-white px-8 py-4 rounded-2xl font-bold">Skill Finder</button>
+          <button onClick={() => handleSignup("worker")} className="bg-[#D4AF37] text-white px-8 py-4 rounded-2xl font-bold">Skill Worker</button>
+        </div>
       </div>
     )
   }
@@ -37,19 +38,60 @@ export default function App() {
         </div>
         
         <div className="p-4 flex gap-2 overflow-x-auto bg-white border-b">
-          <button className="bg-[#0A4D3C] text-white px-4 py-2 rounded-xl">🤖 AI Pro</button>
-          <button className="bg-gray-200 px-4 py-2 rounded-xl">💬 Chat Pro</button>
-          <button className="bg-gray-200 px-4 py-2 rounded-xl">🔍 Search</button>
+          <button onClick={() => setActiveTab("ai")} className={`px-4 py-2 rounded-xl ${activeTab === "ai" ? "bg-[#0A4D3C] text-white" : "bg-gray-200"}`}>🤖 AI</button>
+          <button onClick={() => setActiveTab("chat")} className={`px-4 py-2 rounded-xl ${activeTab === "chat" ? "bg-[#0A4D3C] text-white" : "bg-gray-200"}`}>💬 Chat</button>
+          <button onClick={() => setActiveTab("search")} className={`px-4 py-2 rounded-xl ${activeTab === "search" ? "bg-[#0A4D3C] text-white" : "bg-gray-200"}`}>🔍 Search</button>
         </div>
 
         <div className="p-4">
-          <h3 className="text-2xl font-bold">Workers Near You</h3>
-          <div className="bg-white p-4 rounded-xl mt-4 shadow">
-            <p className="font-bold">Adebayo O. <span className="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full">✓ Verified</span></p>
-            <p className="text-sm text-gray-600">Plumber • Ibadan • 2.1km away</p>
-            <p className="text-sm mt-1">⭐ 4.9 (23 reviews) • 87 jobs</p>
-            <p className="text-sm mt-1">📞 0803 123 4567</p>
-          </div>
+          
+          {/* IF USER IS FINDER */}
+          {userType === "finder" && activeTab === "search" && (
+            <>
+              <h3 className="text-2xl font-bold">Workers Near You</h3>
+              {fakeWorkers.map(worker => (
+                <div key={worker.id} className="bg-white p-4 rounded-xl mt-4 shadow">
+                  <p className="font-bold">{worker.name} <span className="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full">✓ Verified</span></p>
+                  <p className="text-sm text-gray-600">{worker.skill} • {worker.location} • {worker.distance}</p>
+                  <p className="text-sm mt-1">⭐ {worker.rating} ({worker.reviews} reviews)</p>
+                  <p className="text-sm mt-1">📞 {worker.phone}</p>
+                  {/* NO PRICE HERE */}
+                </div>
+              ))}
+            </>
+          )}
+
+          {/* IF USER IS WORKER */}
+          {userType === "worker" && activeTab === "search" && (
+            <>
+              <h3 className="text-2xl font-bold">My MELANDI Profile</h3>
+              <div className="bg-white p-4 rounded-xl mt-4 shadow">
+                <p className="font-bold">Your Profile is Live</p>
+                <p className="text-sm text-gray-600">Skill Finders in Ibadan can see you now</p>
+                <button className="mt-2 bg-[#0A4D3C] text-white px-4 py-2 rounded-xl">Edit Profile</button>
+              </div>
+              <h3 className="text-2xl font-bold mt-6">New Job Requests</h3>
+              <div className="bg-white p-4 rounded-xl mt-2 shadow">
+                <p>0 new requests</p>
+              </div>
+            </>
+          )}
+
+          {/* AI TAB - PRICE SHOWS HERE */}
+          {activeTab === "ai" && (
+            <div className="text-center mt-10 bg-white p-6 rounded-2xl shadow">
+              <h3 className="text-2xl font-bold">MELANDI AI 🤖</h3>
+              <div className="bg-[#D4AF37]/20 p-3 rounded-xl mt-4"><p className="font-bold">Pro: ₦2000/month</p></div>
+            </div>
+          )}
+
+          {/* CHAT TAB - PRICE SHOWS HERE */}
+          {activeTab === "chat" && (
+            <div className="text-center mt-10 bg-white p-6 rounded-2xl shadow">
+              <h3 className="text-2xl font-bold">Chat 💬</h3>
+              <div className="bg-[#D4AF37]/20 p-3 rounded-xl mt-4"><p className="font-bold">Included in Pro: ₦2000/month</p></div>
+            </div>
+          )}
         </div>
       </div>
     )
