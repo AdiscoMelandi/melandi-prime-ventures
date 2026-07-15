@@ -311,30 +311,34 @@ function App() {
               <option>🔧 Plumber</option>
               <option>⚡ Electrician</option>
               <option>✂️ Tailor</option>
-              <option>🎨 Painter</option>
-            </select>
-            <input placeholder="Years of Experience" type="number" className="border-2 border-gray-200 focus:border-[#0A4D3C] outline-none rounded-xl p-3 bg-white shadow-sm" />
-            
-            <div className="bg-white p-3 rounded-xl border-2 border-dashed border-gray-300">
-              <label className="text-sm text-gray-600 font-semibold">Upload ID Card / Verification</label>
-              <input type="file" className="w-full mt-1" />
-            </div>
-            
-            <div className="bg-white p-3 rounded-xl border-2 border-dashed border-gray-300">
-              <label className="text-sm text-gray-600 font-semibold">Upload Work Photos</label>
-              <input type="file" multiple className="w-full mt-1" />
-            </div>
-            
-            <button 
-              type="button"
-              onClick={() => setSignedUp(true)} // <-- THIS TAKES THEM TO MELANDI DASHBOARD
-              className="bg-gradient-to-r from-[#D4AF37] to-[#B8860B] text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:scale-[1.02] transition"
-            >
-              Submit for Verification
-            </button>
+              </option>
+      </select>
+
+      <input 
+        placeholder="Years of Experience" 
+        className="w-full p-3 border rounded-lg"
+      />
+
+      <div className="bg-white p-3 rounded-lg">
+        <label className="text-sm text-gray-600">ID Document</label>
+        <input type="file" className="w-full mt-1" />
+      </div>
+
+      <div className="bg-white p-3 rounded-lg">
+        <label className="text-sm text-gray-600">Portfolio Images</label>
+        <input type="file" multiple className="w-full mt-1" />
+      </div>
+
+      <button
+        type="button"
+        onClick={() => setSignedUp(true)}
+        className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-3 px-6 rounded-lg w-full"
+      >
+        Submit for Verification
+      </button>
     </form>
-      </motion.div>
-    </div>
-  );
+  </motion.div>
+</div>
+);
 }
 export default App;
