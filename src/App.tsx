@@ -337,8 +337,8 @@ function App() {
       )}
 
     </div>
-  );
-}
-
-
-export default App;
+    );
+ }     // this closes function App
+  }     // ADD THIS LINE - this closes the return( for landing
+  
+  export default App;
