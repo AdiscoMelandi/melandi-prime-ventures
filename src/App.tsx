@@ -115,14 +115,7 @@ function App() {
     </div>
   );
 }
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowLeft, Search, Wrench } from "lucide-react";
 
-function App() {
-  const [view, setView] = useState("landing"); 
-  const [signedUp, setSignedUp] = useState(false);
-  const [tab, setTab] = useState("search"); // <-- Search opens first
 
   // IF USER IS SIGNED UP, SHOW MELANDI DASHBOARD
   if (signedUp) {
