@@ -334,9 +334,8 @@ function App() {
             </button>
           </form>
       </motion.div>
-  }
-  
-    </div>
-  );
+    }
+  </div>
+);
 }
 export default App;
