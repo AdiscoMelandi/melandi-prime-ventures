@@ -332,10 +332,9 @@ function App() {
             >
               Submit for Verification
             </button>
-          </form>
+    </form>
       </motion.div>
-    }
-  </div>
-);
+    </div>
+  );
 }
 export default App;
