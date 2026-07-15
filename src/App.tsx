@@ -334,7 +334,7 @@ function App() {
             </button>
           </form>
         </motion.div>
-      )}
+      }
 
     </div>
     );
