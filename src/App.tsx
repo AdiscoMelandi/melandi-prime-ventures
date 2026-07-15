@@ -333,11 +333,10 @@ function App() {
               Submit for Verification
             </button>
           </form>
-        </motion.div>
-      }
-
+      </motion.div>
+  }
+  
     </div>
-    );
+  );
 }
 export default App;
-
